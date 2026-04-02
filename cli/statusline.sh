@@ -23,12 +23,12 @@ BAR=""
 [ "$FILLED" -gt 0 ] && printf -v F "%${FILLED}s" && BAR="${F// /▓}"
 [ "$EMPTY" -gt 0 ] && printf -v E "%${EMPTY}s" && BAR="${BAR}${E// /░}"
 
-OLIVE='\033[38;2;125;160;60m'
+ACCENT='\033[38;2;125;160;60m'
 PREFIX=""
 BLUE='\033[34m'
 DIR_DISPLAY=$(echo "$CWD" | sed "s|^$HOME|~|")
 REPO_NAME=$(basename "$CWD")
-[ -n "$GIT_BRANCH" ] && PREFIX="${OLIVE}${REPO_NAME}:${GIT_BRANCH}${RESET} | "
+[ -n "$GIT_BRANCH" ] && PREFIX="${ACCENT} ${REPO_NAME}:${GIT_BRANCH}${RESET} | "
 
 PINK='\033[1;35m'
-printf "%b" "${PREFIX}${PINK}${MODEL}${RESET} | ${CTX_COLOR}${BAR} ${CTX}%${RESET}\n${BLUE}${DIR_DISPLAY}${RESET}"
+printf "%b" "${PREFIX}${PINK}󰧑 ${MODEL}${RESET} | ${CTX_COLOR}󰓅 ${BAR} ${CTX}%${RESET}\n${BLUE}${DIR_DISPLAY}${RESET}"
