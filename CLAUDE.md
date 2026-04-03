@@ -30,6 +30,6 @@ git pull && ./install.sh  # update
 
 - **No worktrees** — skills don't manage git branches or worktrees
 - **Sequential subagents only** in `/implement` — no parallel execution to avoid conflicts
-- **Project verification** — skills look for a `Verification` section in the target project's CLAUDE.md for test/lint commands
+- **Project verification** — skills look for a `Verification` section in the target project's CLAUDE.md for test/lint commands. If not found — auto-detect language and run standard checks (dart analyze, npm test, gradlew build, pytest, go test)
 - **Adaptive brainstorm** — small tasks get a plan directly, large tasks get a spec first then a plan
-- **Specs/plans** are saved to `docs/superpowers/specs/` and `docs/superpowers/plans/` with date-prefixed filenames
+- **Specs/plans** are saved to `docs/plan/` with date-prefixed filenames
