@@ -17,8 +17,8 @@ Collaborative design through structured dialogue.
    - **Small** (1-3 files, clear scope) → write plan with steps directly
    - **Large** (multiple components, unclear boundaries) → write spec first, then plan
 6. Save documents:
-   - Spec (if needed): `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
-   - Plan: `docs/superpowers/plans/YYYY-MM-DD-<topic>-plan.md`
+   - Spec (if needed): `docs/plan/YYYY-MM-DD-<topic>-design.md`
+   - Plan: `docs/plan/YYYY-MM-DD-<topic>-plan.md`
 7. Ask user to review written document(s)
 8. Offer: "Shall I run `/implement`?"
 
