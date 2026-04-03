@@ -6,11 +6,11 @@ Lightweight, language-agnostic skills for Claude Code / Copilot CLI / Gemini CLI
 
 | Skill | Command | Description |
 |-------|---------|-------------|
-| `work-through-this` | `/work-through-this [task]` | Entry point — determines task type, routes to the right skill |
-| `brainstorm` | `/brainstorm [idea]` | Explore idea, ask questions, propose approaches, write spec/plan |
-| `implement` | `/implement [path/to/plan.md]` | Execute plan via subagents, final review at the end |
-| `debug` | `/debug [bug description]` | Hypothesis-driven debugging: gather context → hypothesize → test → fix |
-| `review` | `/review [PR number / branch]` | Code review with specific file:line references |
+| `work-through-this` | `/work-through-this [task]` | Entry point — analyzes task type, routes to the right skill, asks if ambiguous |
+| `brainstorm` | `/brainstorm [idea]` | Reads project context, asks questions, proposes approaches, writes spec/plan |
+| `implement` | `/implement [path/to/plan.md]` | Execute plan via subagents with verification after each step |
+| `debug` | `/debug [bug description]` | Reproduce first, then hypothesize → test → fix → verify |
+| `review` | `/review [PR number / branch]` | Full-diff code review with file:line references, severity levels, test coverage checks |
 
 ## Installation
 
