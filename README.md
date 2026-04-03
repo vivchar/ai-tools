@@ -47,11 +47,11 @@ Or call any skill directly:
 
 ## How It Works
 
-- **`work-through-this`** analyzes your task and routes to the appropriate skill
-- **`brainstorm`** adapts to task size: small tasks get a plan directly, large tasks get a spec first
-- **`implement`** dispatches one subagent per task step, then a review-subagent checks everything at the end
-- **`debug`** tests hypotheses one at a time, most probable first
-- **`review`** reads the diff and reports issues by severity (critical / important / nit)
+- **`work-through-this`** analyzes your task and routes to the appropriate skill. If task is ambiguous (bug + feature) — asks which to tackle first
+- **`brainstorm`** reads project's CLAUDE.md first, adapts to task size: small tasks get a plan directly, large tasks get a spec first
+- **`implement`** dispatches one subagent per task step with verification after each, then a review-subagent checks everything at the end
+- **`debug`** reproduces the bug first, then tests hypotheses one at a time, most probable first
+- **`review`** reads the full diff and reports issues by severity (critical / important / nit), flags missing test coverage
 
 ## Project Verification
 
@@ -63,7 +63,12 @@ Skills that run verification (implement, debug) look for a `Verification` sectio
 - `npm run lint`
 ```
 
-## Design Docs
+If no Verification section is found, skills auto-detect the language and run standard checks:
 
-- [Design spec](docs/2026-04-01-custom-skills-design.md)
-- [Implementation plan](docs/2026-04-01-custom-skills-plan.md)
+| Project marker | Language | Commands |
+|---|---|---|
+| `pubspec.yaml` | Dart/Flutter | `dart analyze`, `flutter test` |
+| `package.json` | JS/TS | `npm test`, `npx tsc --noEmit` |
+| `build.gradle` | Kotlin/Java | `./gradlew build` |
+| `pyproject.toml` / `setup.py` | Python | `pytest` |
+| `go.mod` | Go | `go build ./...`, `go test ./...` |
