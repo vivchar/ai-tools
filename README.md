@@ -1,6 +1,6 @@
 # AI Tools
 
-Lightweight, language-agnostic skills for Claude Code / Copilot CLI / Gemini CLI. Designed for teams working across multiple projects and tech stacks.
+Lightweight, language-agnostic skills and hooks for Claude Code / Copilot CLI / Gemini CLI. Designed for teams working across multiple projects and tech stacks.
 
 ## Skills
 
@@ -52,6 +52,35 @@ Or call any skill directly:
 - **`implement`** dispatches one subagent per task step with verification after each, then a review-subagent checks everything at the end
 - **`debug`** reproduces the bug first, then tests hypotheses one at a time, most probable first
 - **`review`** reads the full diff and reports issues by severity (critical / important / nit), flags missing test coverage
+
+## Hooks
+
+Optional notification hooks for Claude Code (macOS). Requires `terminal-notifier` and `jq`:
+
+```bash
+brew install terminal-notifier jq
+```
+
+**Install via slash-command** (run inside this repo):
+
+```
+claude
+/install-hooks
+```
+
+Claude reads `hooks.json`, backs up your current `~/.claude/settings.json`, and merges the `Stop` / `Notification` hooks in — preserving everything else in your settings.
+
+**Uninstall:**
+
+```
+/uninstall-hooks
+```
+
+**Manual install** — copy the `hooks` object from [`hooks.json`](hooks.json) into your `~/.claude/settings.json` by hand.
+
+What you get:
+- **Stop** — plays `Glass` sound and shows a notification when Claude finishes responding
+- **Notification** — plays `Ping` sound and shows the message when Claude is waiting for input
 
 ## Project Verification
 

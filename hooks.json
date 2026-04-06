@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CWD=$(cat | jq -r '.cwd') && /opt/homebrew/bin/terminal-notifier -title 'Claude Code' -message \"Готово в $(basename $CWD)\" -sound Glass"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "INPUT=$(cat); CWD=$(echo \"$INPUT\" | jq -r '.cwd'); MSG=$(echo \"$INPUT\" | jq -r '.message'); /opt/homebrew/bin/terminal-notifier -title 'Claude Code ждёт' -message \"$MSG ($(basename $CWD))\" -sound Ping"
+          }
+        ]
+      }
+    ]
+  }
+}

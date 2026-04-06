@@ -1,0 +1,4 @@
+# Override global gitignore for .claude/commands — these are shipped slash-commands.
+!.claude/
+!.claude/commands/
+!.claude/commands/*.md
