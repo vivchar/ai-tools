@@ -1,6 +1,6 @@
 # AI Tools
 
-Lightweight, language-agnostic skills and hooks for Claude Code / Copilot CLI / Gemini CLI. Designed for teams working across multiple projects and tech stacks.
+Lightweight, language-agnostic skills, hooks and statusline for Claude Code / Copilot CLI / Gemini CLI. Designed for teams working across multiple projects and tech stacks.
 
 ## Skills
 
@@ -22,11 +22,22 @@ cd ai-tools
 
 Creates symlinks in `~/.claude/skills/` (Claude Code) and `~/.agents/skills/` (Copilot CLI, Codex, Gemini CLI).
 
+Optional extras — run from inside the cloned repo via `claude`:
+
+| What | Command | What it does |
+|---|---|---|
+| Notification hooks | `/install-hooks` | Adds `Stop` + `Notification` hooks to `~/.claude/settings.json` |
+| Statusline | `/install-statusline` | Symlinks `cli/statusline.sh` to `~/.claude/` and adds `statusLine` to settings |
+
+Both extras back up your `settings.json` before touching it, preserve all other fields, and have matching `/uninstall-*` commands.
+
 ## Update
 
 ```bash
 git pull && ./install.sh
 ```
+
+Skills are symlinks, so `git pull` is enough — no re-install needed. Hooks and statusline re-install only if `hooks.json`, `statusline.json`, or `cli/statusline.sh` change.
 
 ## Usage
 
@@ -55,32 +66,43 @@ Or call any skill directly:
 
 ## Hooks
 
-Optional notification hooks for Claude Code (macOS). Requires `terminal-notifier` and `jq`:
+Notification hooks for Claude Code (macOS). Requires `terminal-notifier` and `jq`:
 
 ```bash
 brew install terminal-notifier jq
 ```
 
-**Install via slash-command** (run inside this repo):
+Inside the cloned repo:
 
 ```
 claude
-/install-hooks
+/install-hooks      # merge Stop + Notification hooks into settings.json
+/uninstall-hooks    # remove them
 ```
-
-Claude reads `hooks.json`, backs up your current `~/.claude/settings.json`, and merges the `Stop` / `Notification` hooks in — preserving everything else in your settings.
-
-**Uninstall:**
-
-```
-/uninstall-hooks
-```
-
-**Manual install** — copy the `hooks` object from [`hooks.json`](hooks.json) into your `~/.claude/settings.json` by hand.
 
 What you get:
 - **Stop** — plays `Glass` sound and shows a notification when Claude finishes responding
 - **Notification** — plays `Ping` sound and shows the message when Claude is waiting for input
+
+Manual install — copy the `hooks` object from [`hooks.json`](hooks.json) into your `~/.claude/settings.json` by hand.
+
+## Statusline
+
+Custom statusline with model, git branch and context-window progress bar. Requires `jq`:
+
+```bash
+brew install jq
+```
+
+Inside the cloned repo:
+
+```
+claude
+/install-statusline      # symlinks cli/statusline.sh and adds statusLine to settings
+/uninstall-statusline    # removes the symlink and settings entry
+```
+
+The install symlinks `cli/statusline.sh` into `~/.claude/statusline.sh`, so editing the script in the repo updates everywhere. Restart Claude Code to see changes.
 
 ## Project Verification
 
