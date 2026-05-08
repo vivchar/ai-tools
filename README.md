@@ -14,13 +14,25 @@ Lightweight, language-agnostic skills, hooks and statusline for Claude Code / Co
 
 ## Installation
 
+### macOS / Linux
+
 ```bash
 git clone <repo-url>
 cd ai-tools
 ./install.sh
 ```
 
-Creates symlinks in `~/.claude/skills/` (Claude Code) and `~/.agents/skills/` (Copilot CLI, Codex, Gemini CLI).
+### Windows
+
+```powershell
+git clone <repo-url>
+cd ai-tools
+.\install.ps1
+```
+
+Or double-click `install.cmd`. The script tries `SymbolicLink` first (needs Developer Mode on Win11 or admin) and falls back to `Junction` (no privileges required) — both work transparently for skill discovery.
+
+Both installers create symlinks/junctions in `~/.claude/skills/` (Claude Code) and `~/.agents/skills/` (Copilot CLI, Codex, Gemini CLI).
 
 Optional extras — run from inside the cloned repo via `claude`:
 
@@ -34,10 +46,10 @@ Both extras back up your `settings.json` before touching it, preserve all other 
 ## Update
 
 ```bash
-git pull && ./install.sh
+git pull               # macOS/Linux & Windows when symlinks/junctions worked
 ```
 
-Skills are symlinks, so `git pull` is enough — no re-install needed. Hooks and statusline re-install only if `hooks.json`, `statusline.json`, or `cli/statusline.sh` change.
+Skills are symlinks/junctions, so `git pull` is enough — no re-install needed. Hooks and statusline re-install only if their source files change. On Windows, if `notify.ps1` / `statusline.ps1` were copied (because symlink fell back), re-run `/install-hooks` / `/install-statusline` after `git pull`.
 
 ## Usage
 
@@ -66,10 +78,18 @@ Or call any skill directly:
 
 ## Hooks
 
-Notification hooks for Claude Code (macOS). Requires `terminal-notifier` and `jq`:
+Notification hooks for Claude Code.
+
+**macOS** — requires `terminal-notifier` and `jq`:
 
 ```bash
 brew install terminal-notifier jq
+```
+
+**Windows** — uses PowerShell with `cli/notify.ps1`. Optionally install [BurntToast](https://github.com/Windos/BurntToast) for nicer Win10/11 toasts (otherwise falls back to a WinForms balloon):
+
+```powershell
+Install-Module BurntToast -Scope CurrentUser
 ```
 
 Inside the cloned repo:
@@ -80,29 +100,33 @@ claude
 /uninstall-hooks    # remove them
 ```
 
-What you get:
-- **Stop** — plays `Glass` sound and shows a notification when Claude finishes responding
-- **Notification** — plays `Ping` sound and shows the message when Claude is waiting for input
+The slash-commands detect your OS and install the right variant. What you get on either platform:
+- **Stop** — plays a sound and shows a notification when Claude finishes responding
+- **Notification** — plays a sound and shows the message when Claude is waiting for input
 
-Manual install — copy the `hooks` object from [`hooks.json`](hooks.json) into your `~/.claude/settings.json` by hand.
+Manual install — copy the `hooks` object from [`hooks.json`](hooks.json) (macOS) into your `~/.claude/settings.json` by hand. Windows manual install: see the JSON fragment in [`.claude/commands/install-hooks.md`](.claude/commands/install-hooks.md).
 
 ## Statusline
 
-Custom statusline with model, git branch and context-window progress bar. Requires `jq`:
+Custom statusline with model, git branch and context-window progress bar.
+
+**macOS** — bash script, requires `jq`:
 
 ```bash
 brew install jq
 ```
 
+**Windows** — pure PowerShell, no external deps. ANSI colors require Windows Terminal or any modern conhost.
+
 Inside the cloned repo:
 
 ```
 claude
-/install-statusline      # symlinks cli/statusline.sh and adds statusLine to settings
-/uninstall-statusline    # removes the symlink and settings entry
+/install-statusline      # links cli/statusline.{sh,ps1} into ~/.claude/ and adds statusLine to settings
+/uninstall-statusline    # removes the link and settings entry
 ```
 
-The install symlinks `cli/statusline.sh` into `~/.claude/statusline.sh`, so editing the script in the repo updates everywhere. Restart Claude Code to see changes.
+The install symlinks/junctions the script into `~/.claude/`, so editing the script in the repo updates everywhere (when symlink succeeded). Restart Claude Code to see changes.
 
 ## Project Verification
 
